@@ -48,7 +48,8 @@ def update(request, id):
     update_blog.body = request.POST['body']
     update_blog.phone = request.POST['phone']
     update_blog.pub_date = timezone.now()
-    update_blog.image = request.FILES.get('image')
+    if request.FILES.get('image'):
+        update_blog.image = request.FILES['image']
 
     update_blog.save()
 
