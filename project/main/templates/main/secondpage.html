@@ -3,13 +3,13 @@
 <h1 class="contents">2024 멋쟁이사자처럼 12기</h1> 
 <div class="contents">This is SecondPage!!</div> 
 <div> 
-    {% for blog in blogs %} 
+    {% for post in posts %} 
     <div> 
         <hr/> 
-        <h3>{{blog.title}}</h3> 
-        {{blog.writer}} | {{blog.pub_date}}<br> 
-        {{blog.summary}} 
-        <a href="{% url 'main:detail' blog.id %}">자세히 보기</a>
+        <h3>{{post.title}}</h3> 
+        {{post.writer}} | {{post.pub_date}}<br> 
+        {{post.summary}} 
+        <a href="{% url 'main:detail' post.id %}">자세히 보기</a>
         <br> 
     </div> 
     {% endfor %} 
