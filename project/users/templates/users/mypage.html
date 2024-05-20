@@ -10,7 +10,7 @@
 <br>
 
     {% for post in posts %} 
-        {% if user.profile.nickname == post.writer %}
+        {% if user.profile.user == post.writer %}
             <div> 
                 <hr/> 
                 <h3>{{post.title}}</h3> 
