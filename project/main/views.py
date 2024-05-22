@@ -88,9 +88,10 @@ def delete(request, id):
     return redirect('main:secondpage')
 
 def comment_delete(request, id):
-    delete_comment = Comment.objects.get(pk=id)
-    delete_comment.delete()
-    return redirect('main:secondpage')
+    comment = Comment.objects.get(pk=id)
+    if request.user == comment.writer:
+        comment.delete()
+    return redirect('main:detail',id=comment.post.id)
 
 
 def tag_list(request):
