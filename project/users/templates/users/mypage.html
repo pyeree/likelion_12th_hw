@@ -1,24 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-<h1>마이페이지에 오신 것을 환영합니다</h1>
+User : {{target_user}}<br>
+UserProfile : {{target_user.profile}}<br>
+UserNickname : {{target_user.profile.nickname}}<br>
 
-<h3>{{user.profile.nickname}}님 안녕하세요</h3>
-<h3>당신의 학과는 {{user.profile.department}}입니다</h3>
-<h3>당신의 mbti는 {{user.profile.mbti}}입니다</h3>
-<br>
+<p>팔로워<br>{{target_user.profile.followers.count}}명</p>
+<p>팔로잉<br>{{target_user.profile.followings.count}}명</p>
 
-    {% for post in posts %} 
-        {% if user.profile.user == post.writer %}
-            <div> 
-                <hr/> 
-                <h3>{{post.title}}</h3> 
-                {{post.writer}} | {{post.pub_date}}<br> 
-                {{post.summary}} 
-                <a href="{% url 'main:detail' post.id %}">자세히 보기</a>
-                <br> 
-            </div> 
-        {% endif %}
-    {% endfor %} 
+{% if request.user != target_user %}
+    {% if request.user.profile in target_user.profile.followers.all %}
+        <a href="{% url 'users:follow' target_user.id %}">
+            <button type="button" class="btn btn-outline-info">언팔로우</button>
+        </a>
+    {% else %}
+        
+    <a href="{% url 'users:follow' target_user.id %}">
+        <button type="button" class="btn btn-info">팔로우</button>
+    </a>
+    {% endif %}
+{% endif %}
+    <p>#팔로워</p>
+    <ul>
+    {% for follower in followers %}
+    <li><a href="{% url 'users:mypage' follower.id %}"> {{follower}}</a> </li>  
+    {% endfor %}
+    </ul>
+
+    <br><p>#팔로잉</p>
+    {% for following in followings %}
+    <li><a href="{% url 'users:mypage' following.id %}"> {{following}}</a> </li>  
+    {% endfor %}   
 {% endblock %}

@@ -15,6 +15,7 @@ urlpatterns =[
     path('tag-list',tag_list,name="tag-list"),
     path('tag-post/<int:tag_id>',tag_posts,name="tag-posts"),
     path('comment-delete/<int:id>', comment_delete, name='comment_delete'),
+    path('likes/<int:post_id>',likes,name="likes"),
     
 ]
 

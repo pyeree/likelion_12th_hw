@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib import auth
 from django.contrib.auth.models import User
-from .models import Profile
+from accounts.models import Profile
 
 # Create your views here.
 def login(request):
@@ -30,17 +30,17 @@ def signup(request):
         if request.POST['password'] == request.POST['confirm']:
             user = User.objects.create_user(
                 username=request.POST['username'],
-                password=request.POST['password']
+                password=request.POST['password'],
             )
-            nickname=request.POST['nickname']
-            department=request.POST['department']
-            mbti =request.POST['mbti']
-
-            profile =Profile(user=user,nickname=nickname,department=department,mbti=mbti)
-            profile.save()
+            user.profile.nickname = request.POST['nickname']
+            user.profile.department = request.POST['department']
+            user.profile.mbti = request.POST['mbti']
+            user.profile.save()
+            
 
 
             auth.login(request,user)
             return redirect('/')
         
     return render(request,'accounts/signup.html')
+
